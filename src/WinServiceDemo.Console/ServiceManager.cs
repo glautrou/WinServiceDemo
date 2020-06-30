@@ -28,8 +28,13 @@ namespace WinServiceDemo.Console
 
             System.Console.WriteLine("Starting service...");
 
+            //Initialize timer:
+            //Note: First time you have to wait for interval before first tick.
+            //To start quickly we set a short interval that will be overwritten on next tick.
             _timer = new Timer(1_000);
+            //Set action associated to each tick
             _timer.Elapsed += Process;
+            //Start the timer
             _timer.Start();
         }
 
@@ -42,9 +47,17 @@ namespace WinServiceDemo.Console
 
             System.Console.WriteLine("Stopping service...");
 
+            //Stop timer
             _timer.Stop();
+            //Dereference tick action
             _timer.Elapsed -= Process;
+            //Dispose timer
             _timer.Dispose();
+
+            //Note: you can create a while(tru) here waiting for you pending process to properly end.
+            //In that case, you can for example add a IsProcessing property and set while(IsProcessing) { }
+            //In your Process() method, set "IsProcessing = true;" at the start and "false" at the end.
+            //If your processes can overlap, you neet to improve this code accordingly.
         }
 
 
@@ -55,16 +68,19 @@ namespace WinServiceDemo.Console
         /// <param name="eventArgs">The <see cref="ElapsedEventArgs"/> instance containing the event data.</param>
         private void Process(object sender, ElapsedEventArgs eventArgs)
         {
-            _timer.Enabled = false; //Trick to avoid processes to overlap in case process duration longer than timer tick duration
+            //Trick to avoid processes to overlap in case process duration longer than timer tick duration
+            _timer.Enabled = false;
 
             System.Console.WriteLine("Processing...");
-
+            
             try
             {
                 //Make sure there is no error thrown from the process method
 
-                //Simulate 1 second operation
-                System.Threading.Thread.Sleep(1_000);
+                //Your processing code here...
+                //...
+                System.Threading.Thread.Sleep(1_000); //Simulate a 1 second operation
+                //...
             }
             catch (Exception ex)
             {
@@ -73,8 +89,12 @@ namespace WinServiceDemo.Console
 
             System.Console.WriteLine("Processing... DONE!");
 
-            _timer.Interval = TimerInterval;
-            _timer.Enabled = true; //Unpause timer
+            //If interval is different from defined interval we set it to default value.
+            //This is the case on OnStart() method, we set a small interval to tick Process() method asap.
+            if (_timer.Interval != TimerInterval)
+                _timer.Interval = TimerInterval;
+            //Unpause timer, it can resume
+            _timer.Enabled = true;
         }
     }
 }
