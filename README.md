@@ -69,3 +69,16 @@ WinServiceDemo.Console.exe uninstall
 ```
 
 <ins>Note:</ins> When you uninstall it the OnStop() method is correctly fired and your service manager correctly cleaned. However, I noticed that tis way does not correctly stop it, the service status is marked as deactivated and our .exe is still running in task manager. This problem means that we cannot copy our new version of the application because some files are in use and the locked by the operating system. Stopping the service via Powershell command and then uninstalling it fixed this issue.
+
+## Step 9 - Integrate into your CI/CD pipeline:
+You can find in /scripts folder the Powershell files that can be used in your CI/CD pipeline:
+
+1. Get your **artifact**
+2. Enventualy set environment **variables** or appsettings.json environment values
+3. **service-stop.ps1**: Stop the service. If service missing, command is automatically skipped
+4. **service-uninstall.ps1**: Uninstall the service. If .exe missing, command is automatically skipped
+5. **service-wait-locks.ps1**: In my case there were very long running threads/tasks making service stop/uninstall quite long and that can reach timeout. To avoid operating system file locks during new version copy the script check when file are not locked (e.g. log4net.dll not in use here) to allow a safe upgrade.
+6. **Copy artifact** files on server
+7. **service-install.ps1**: Install the service
+8. **service-start.ps1**: Start the service
+9. **Enjoy!**
