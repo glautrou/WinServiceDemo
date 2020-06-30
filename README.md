@@ -1,6 +1,8 @@
 # WinServiceDemo
 C# Windows Service demo app using [Topshelf](http://topshelf-project.com/) and GitHub Actions
 
+![Compile](https://github.com/glautrou/WinServiceDemo/workflows/Compile/badge.svg)
+
 ## Why Topshelf?
 I used to develop Windows Services without the need of any third-party libraries. I created some code used to manage my service, like the processing, but also the entire lifecycle and even install/uninstall features. I then added my code, which was concise and robust in production, on the private NuGet of my company for reusing it on all our Windows Services projects.
 
