@@ -4,12 +4,12 @@ C# Windows Service demo app using [Topshelf](http://topshelf-project.com/) and G
 ## Why Topshelf?
 I used to develop Windows Services without the need of any third-party libraries. I created some code used to manage my service, like the processing, but also the entire lifecycle and even install/uninstall features. I then added my code, which was concise and robust in production, on the private NuGet of my company for reusing it on all our Windows Services projects.
 
-Topshelf is widely kwnown an used among C# developers, this time I wanted to give a go to Topshelf. The top-features I like:
-⋅⋅* Cross-platform: host services on both Windows and Mono
-⋅⋅* Easy to use
-⋅⋅* Highly Configurable
-⋅⋅* Powerfull command line
-⋅⋅* .NET Core/Framework compatibility
+Topshelf is widely kwnown an used library among C# developers for creating Windows Services, this time I wanted to give it a try. Top-features I like the most:
+- Cross-platform: host services on both Windows and Mono
+- Easy to use
+- Highly Configurable
+- Powerfull command line
+- .NET Core/Framework compatibility
 
 ## Step 1 - Create the solution:
 ```bash
