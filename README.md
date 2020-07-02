@@ -1,6 +1,4 @@
-# WinServiceDemo
-C# Windows Service demo app using [Topshelf](http://topshelf-project.com/) and GitHub Actions.
-
+# Creation and deployment of a C# Windows Service using [Topshelf](http://topshelf-project.com/)
 You can find my full blog post [here](https://blog.webnet.fr/creation-dun-service-windows-avec-topshelf-et-ci-cd/) (French).
 
 ![Compile](https://github.com/glautrou/WinServiceDemo/workflows/Compile/badge.svg)
