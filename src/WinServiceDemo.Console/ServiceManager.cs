@@ -8,7 +8,6 @@ namespace WinServiceDemo.Console
     /// </summary>
     public class ServiceManager
     {
-
         /// <summary>
         /// The timer interval
         /// </summary>
@@ -19,7 +18,7 @@ namespace WinServiceDemo.Console
         private Timer _timer;
 
         /// <summary>
-        /// Starts the servive
+        /// Starts the service
         /// </summary>
         public void Start()
         {
@@ -31,6 +30,7 @@ namespace WinServiceDemo.Console
             //Initialize timer:
             //Note: First time you have to wait for interval before first tick.
             //To start quickly we set a short interval that will be overwritten on next tick.
+            //You could also call: Process(null, null);
             _timer = new Timer(1_000);
             //Set action associated to each tick
             _timer.Elapsed += Process;
@@ -54,12 +54,11 @@ namespace WinServiceDemo.Console
             //Dispose timer
             _timer.Dispose();
 
-            //Note: you can create a while(tru) here waiting for you pending process to properly end.
-            //In that case, you can for example add a IsProcessing property and set while(IsProcessing) { }
+            //Note: you can create a while(true) here waiting for you pending process to properly end.
+            //In that case, you can for example add an IsProcessing property and set while(IsProcessing) { }
             //In your Process() method, set "IsProcessing = true;" at the start and "false" at the end.
             //If your processes can overlap, you neet to improve this code accordingly.
         }
-
 
         /// <summary>
         /// Process action for each tick
@@ -69,6 +68,7 @@ namespace WinServiceDemo.Console
         private void Process(object sender, ElapsedEventArgs eventArgs)
         {
             //Trick to avoid processes to overlap in case process duration longer than timer tick duration
+            //If your Process() is slow or you need exact same time between 2 starts you have to do it in another way
             _timer.Enabled = false;
 
             System.Console.WriteLine("Processing...");
@@ -90,7 +90,8 @@ namespace WinServiceDemo.Console
             System.Console.WriteLine("Processing... DONE!");
 
             //If interval is different from defined interval we set it to default value.
-            //This is the case on OnStart() method, we set a small interval to tick Process() method asap.
+            //This is the case on Start() method, we set a small interval to tick Process() method asap.
+            //You can also adapt interval depending on charge (e.g. 1sec hight charge, 1min avg charge, 10mins low charge)
             if (_timer.Interval != TimerInterval)
                 _timer.Interval = TimerInterval;
             //Unpause timer, it can resume
