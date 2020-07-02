@@ -46,8 +46,8 @@ dotnet add package Topshelf --version 4.2.1
 ```
 ### Step 5 - Add a service manager:
 1. Create ServiceManager.cs
-2. Add OnStart() method. This method will be fired whenever the service is started.
-3. Add OnStop() method. This method will be fired whenever the service is stopped.
+2. Add Start() method. This method will be fired whenever the service is started.
+3. Add Stop() method. This method will be fired whenever the service is stopped.
 4. Add Process(object sender, ElapsedEventArgs eventArgs) method. This method will be fired on our custom time defined tick.
 5. Define timer with a custom interval time in OnStart(). Set the timer Elapsed property tou our Process() method. In OnStop() dispose the timer.
 
@@ -84,10 +84,10 @@ You can find in /scripts folder the Powershell files that can be used in your CI
 
 1. Get your **artifact**
 2. Enventualy set environment **variables** or appsettings.json environment values
-3. **service-stop.ps1**: Stop the service. If service missing, command is automatically skipped
-4. **service-uninstall.ps1**: Uninstall the service. If .exe missing, command is automatically skipped
-5. **service-wait-locks.ps1**: In my case there were very long running threads/tasks making service stop/uninstall quite long and that can reach timeout. To avoid operating system file locks during new version copy the script check when file are not locked (e.g. log4net.dll not in use here) to allow a safe upgrade.
+3. **[service-stop.ps1](https://github.com/glautrou/WinServiceDemo/blob/master/scripts/service-stop.ps1)**: Stop the service. If service missing, command is automatically skipped
+4. **[service-uninstall.ps1](https://github.com/glautrou/WinServiceDemo/blob/master/scripts/service-uninstall.ps1)**: Uninstall the service. If .exe missing, command is automatically skipped
+5. **[service-wait-locks.ps1](https://github.com/glautrou/WinServiceDemo/blob/master/scripts/service-wait-locks.ps1)**: In my case there were very long running threads/tasks making service stop/uninstall quite long and that can reach timeout. To avoid operating system file locks during new version copy the script check when file are not locked (e.g. log4net.dll not in use here) to allow a safe upgrade.
 6. **Copy artifact** files on server
-7. **service-install.ps1**: Install the service
-8. **service-start.ps1**: Start the service
+7. **[service-install.ps1](https://github.com/glautrou/WinServiceDemo/blob/master/scripts/service-install.ps1)**: Install the service
+8. **[service-start.ps1](https://github.com/glautrou/WinServiceDemo/blob/master/scripts/service-start.ps1)**: Start the service
 9. **Enjoy!**
